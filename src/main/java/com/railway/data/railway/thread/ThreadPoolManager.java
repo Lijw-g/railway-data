@@ -1,7 +1,6 @@
 package com.railway.data.railway.thread;
 
 
-
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,7 +38,7 @@ public class ThreadPoolManager {
         } catch (RejectedExecutionException e) {
             //Log.error("ThreadPool.schedule" + command.toString(), e);
         } catch (Throwable th) {
-           // Log.error("Child Thread Error : " + th.getMessage(), th);
+            // Log.error("Child Thread Error : " + th.getMessage(), th);
         }
     }
 
@@ -54,7 +53,7 @@ public class ThreadPoolManager {
         try {
             getScheduledThreadPoolExecutor().schedule(command, time, timeUnit);
         } catch (RejectedExecutionException e) {
-           // Log.error("ThreadPool.schedule" + command.toString(), e);
+            // Log.error("ThreadPool.schedule" + command.toString(), e);
         } catch (Throwable th) {
             //Log.error("Child Thread Error : " + th.getMessage(), th);
         }
@@ -71,7 +70,7 @@ public class ThreadPoolManager {
         try {
             future = getExecutor(priority).submit(callable);
         } catch (RejectedExecutionException e) {
-           // Log.error("ThreadPool.submit" + callable.toString(), e);
+            // Log.error("ThreadPool.submit" + callable.toString(), e);
         } catch (Throwable th) {
             //Log.error("Child Thread Error : " + th.getMessage(), th);
         }

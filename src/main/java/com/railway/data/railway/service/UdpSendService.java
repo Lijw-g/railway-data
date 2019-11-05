@@ -1,6 +1,6 @@
 package com.railway.data.railway.service;
 
-import com.subwaydata.subway.util.HexUtil;
+import com.railway.data.railway.util.HexUtil;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class UdpSendService {
     public static Logger logger = Logger.getLogger(UdpSendService.class.getName());
 
-    public void Process(DatagramPacket packet ) throws UnsupportedEncodingException {
+    public void Process(DatagramPacket packet) throws UnsupportedEncodingException {
         logger.info("=======接收到的UDP信息======");
         // 接收到的UDP信息，然后解码
         byte[] buffer = packet.getData();

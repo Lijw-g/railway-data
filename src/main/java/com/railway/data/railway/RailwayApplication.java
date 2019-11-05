@@ -24,6 +24,7 @@ public class RailwayApplication {
     public static void main(String[] args) {
         SpringApplication.run(RailwayApplication.class, args);
     }
+
     @Bean
     CommandLineRunner serverRunner(DataHandler handler) {
         return strings -> {

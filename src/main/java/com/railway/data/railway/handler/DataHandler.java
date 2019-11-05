@@ -29,6 +29,7 @@ public class DataHandler extends IoHandlerAdapter {
     @Autowired
     private KafkaSender<String> kafkaSenders;
     public static Logger logger = Logger.getLogger(DataHandler.class.getName());
+
     /**
      * messageSent是Server响应给Clinet成功后触发的事件
      */
@@ -71,22 +72,22 @@ public class DataHandler extends IoHandlerAdapter {
                 String dataCrc = data.substring(data.length() - 8, data.length() - 4);
                 StringBuilder responsData = new StringBuilder();
                 responsData.append("EA6A12002306010226FFFF720E");
-                if (crcCode.equals(dataCrc)) {
-                    kafkaSenders.sendWithTopic(data, "core_data_topic");
-                    responsData.append("01");
-                    responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
-                    responsData.append("0D0A");
-                    byte[] data2 = DataUtil.creatDate(responsData.toString());
-                    //3.响应客户端
-                    //返回信息给Clinet端
-                    IoBuffer buffer1 = IoBuffer.wrap(data2);
-                    session.write(buffer1);
-                    logger.info("向传感器响应的数据是" + responsData);
-                } else {
-                    responsData.append("00");
-                    responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
-                    logger.warning("数据校验失败，数据不正常");
-                }
+//                if (crcCode.equals(dataCrc)) {
+                kafkaSenders.sendWithTopic(data, "railway_core_data_topic");
+                responsData.append("01");
+                responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
+                responsData.append("0D0A");
+                byte[] data2 = DataUtil.creatDate(responsData.toString());
+                //3.响应客户端
+                //返回信息给Clinet端
+                IoBuffer buffer1 = IoBuffer.wrap(data2);
+                session.write(buffer1);
+                logger.info("向传感器响应的数据是" + responsData);
+//                } else {
+//                    responsData.append("00");
+//                    responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
+//                    logger.warning("数据校验失败，数据不正常");
+//                }
             }
             //心跳包
             if ("740C".equals(order)) {
@@ -98,7 +99,7 @@ public class DataHandler extends IoHandlerAdapter {
                 heart.add(ip);
                 heart.add(diviceStatus);
                 heart.add(data.substring(8, 22));
-                kafkaSenders.sendWithTopic(heart,"heart_topic");
+                kafkaSenders.sendWithTopic(heart, "railway_heart_topic");
                 if ("00".equals(diviceStatus)) {
                     logger.info("工作状态正常");
                 } else if ("E1".equals(diviceStatus)) {
@@ -107,12 +108,11 @@ public class DataHandler extends IoHandlerAdapter {
                     logger.info("电压传感器异常");
                 } else if ("E3".equals(diviceStatus)) {
                     logger.info("电流传感器异常");
-                } else if("E4".equals(diviceStatus)){
+                } else if ("E4".equals(diviceStatus)) {
                     logger.info("开合度传感器异常");
-                } else if("FF".equals(diviceStatus)){
+                } else if ("FF".equals(diviceStatus)) {
                     logger.info("未知异常");
-                }
-                else {
+                } else {
                     logger.info("未知异常数据异常");
                 }
                 /***
@@ -145,7 +145,7 @@ public class DataHandler extends IoHandlerAdapter {
                 logger.info("心跳向传感器响应的数据是" + answerSb.toString());
             }
             //解析采集终端上传信息读取当前采集终端编码 0x7211
-           else if ("7211".equals(order)) {
+            else if ("7211".equals(order)) {
                 StringBuilder resString = new StringBuilder();
                 resString.append("EA6A11002306010226FFFF71110");
                 resString.append(CRC16Util.creatCrc16_s(resString.toString()));
@@ -174,7 +174,7 @@ public class DataHandler extends IoHandlerAdapter {
 
             }
             //设置采集终端时间间隔 0x7212
-           else if ("7212".equals(order)) {
+            else if ("7212".equals(order)) {
                 String msg = "EA6A11002306010226FFFF711200000D0A";
                 byte[] msgs = DataUtil.creatDate(msg);
                 IoBuffer buffer1 = IoBuffer.wrap(msgs);
@@ -182,9 +182,8 @@ public class DataHandler extends IoHandlerAdapter {
                 logger.info("发送给终端设置终端发送间隔时间的命令为：" + msg);
                 logger.info("读取到的信息为" + data);
                 logger.info("接受到的时间间隔" + Long.parseLong(data.substring(26, 28), 16) + "s");
-            }
-           else {
-               kafkaSenders.sendWithTopic(data,"geographical_topic");
+            } else {
+                kafkaSenders.sendWithTopic(data, "railway_geographical_topic");
             }
 
         }

@@ -29,23 +29,24 @@ public class CRC16Util {
         return CRC;
     }
 
-     public  static  String creatCrc16_s(String data){
-         int [] datas=DataUtil.creatDateInt(data);
-         int crcResult = get_crc16(datas, datas.length);
-         StringBuilder sb = new StringBuilder();
-         sb.append(Integer.toHexString( crcResult & 0x000000ff));
-         sb.append(Integer.toHexString(   crcResult>>8));
-         return sb.toString();
-     }
+    public static String creatCrc16_s(String data) {
+        int[] datas = DataUtil.creatDateInt(data);
+        int crcResult = get_crc16(datas, datas.length);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(crcResult & 0x000000ff));
+        sb.append(Integer.toHexString(crcResult >> 8));
+        return sb.toString();
+    }
+
     /**
      * @param args
      */
     public static void main(String[] args) {
-        //EB 6A 2A 00 23 06 01 02 26 FF FF 72 0E 01 39 10 EC 7D 01 6E 35 01 01 21 01 17 02 00 0A 12 00 01 09 01 21 54 00 15 00 00 0D 0A
-        String str="EB 6A 2A 00 23 06 01 02 26 FF FF 72 0E 01 39 10 EC 7D 01 6E 35 01 01 21 01 17 02 00 0A 12 00 01 09 01 21 54 00 15";
-        int[] mm=DataUtil.creatDateInt(str.replaceAll(" ",""));
+        //EB 6A 2A 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6A 36 01 00 29 01 36 4B 01 11 27 01 00 63 01 39 32 01 0A 6B E5 0D 0A
+        String str = "EB 6A 2A 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6A 36 01 00 29 01 36 4B 01 11 27 01 00 63 01 39 32 01 0A";
+        int[] mm = DataUtil.creatDateInt(str.replaceAll(" ", ""));
         int crc16 = get_crc16(mm, mm.length);
-        System.out.println(Integer.toHexString( crc16 & 0x000000ff));
-        System.out.println(Integer.toHexString(   crc16>>8));
+        System.out.println(Integer.toHexString(crc16 & 0x000000ff));
+        System.out.println(Integer.toHexString(crc16 >> 8));
     }
 }
