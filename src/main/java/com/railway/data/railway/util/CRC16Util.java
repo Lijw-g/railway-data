@@ -1,6 +1,8 @@
 package com.railway.data.railway.util;
 
 
+import javax.sound.midi.Soundbank;
+
 public class CRC16Util {
 
     public static int get_crc16(int[] bufData, int buflen) {
@@ -33,8 +35,19 @@ public class CRC16Util {
         int[] datas = DataUtil.creatDateInt(data);
         int crcResult = get_crc16(datas, datas.length);
         StringBuilder sb = new StringBuilder();
-        sb.append(Integer.toHexString(crcResult & 0x000000ff));
-        sb.append(Integer.toHexString(crcResult >> 8));
+        String low = Integer.toHexString(crcResult & 0x000000ff);
+        if (low.length()<2){
+            sb.append("0").append(low);
+        }else {
+            sb.append(low);
+        }
+
+        String hight = Integer.toHexString(crcResult >> 8);
+        if (hight.length() < 2) {
+            sb.append("0").append(hight);
+        } else {
+            sb.append(hight);
+        }
         return sb.toString();
     }
 
@@ -42,11 +55,12 @@ public class CRC16Util {
      * @param args
      */
     public static void main(String[] args) {
-        //EB 6A 2A 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6A 36 01 00 29 01 36 4B 01 11 27 01 00 63 01 39 32 01 0A 6B E5 0D 0A
-        String str = "EB 6A 2A 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6A 36 01 00 29 01 36 4B 01 11 27 01 00 63 01 39 32 01 0A";
+        //EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6B 42 01 00 1D 01 34 32 01 07 62 01 00 45 01 39 32 01 3B 4A 0E 0D 0A
+        String str = "EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6B 42 01 00 1D 01 34 32 01 07 62 01 00 45 01 39 32 01 3B";
         int[] mm = DataUtil.creatDateInt(str.replaceAll(" ", ""));
         int crc16 = get_crc16(mm, mm.length);
         System.out.println(Integer.toHexString(crc16 & 0x000000ff));
         System.out.println(Integer.toHexString(crc16 >> 8));
+        System.out.println(creatCrc16_s(str.replaceAll(" ", "")));
     }
 }

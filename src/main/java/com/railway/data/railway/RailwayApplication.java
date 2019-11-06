@@ -73,7 +73,7 @@ public class RailwayApplication {
         //设置每一个非主监听连接的端口可以重用
         dcfg.setReuseAddress(true);
         //绑定端口
-        acceptor.bind(new InetSocketAddress(8002));
+        acceptor.bind(new InetSocketAddress(8888));
 
     }
 }
