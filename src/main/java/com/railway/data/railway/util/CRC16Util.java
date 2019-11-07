@@ -48,15 +48,15 @@ public class CRC16Util {
         } else {
             sb.append(hight);
         }
-        return sb.toString();
+        return sb.toString().toUpperCase();
     }
 
     /**
      * @param args
      */
     public static void main(String[] args) {
-        //EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6B 42 01 00 1D 01 34 32 01 07 62 01 00 45 01 39 32 01 3B 4A 0E 0D 0A
-        String str = "EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 6B 42 01 00 1D 01 34 32 01 07 62 01 00 45 01 39 32 01 3B";
+        //EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 71 33 01 00 0D 01 33 19 01 00 37 01 00 07 01 35 19 01 41 1F D6 0D 0A
+        String str = "EB 6A 2 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 71 33 01 00 0D 01 33 19 01 00 37 01 00 07 01 35 19 01 41";
         int[] mm = DataUtil.creatDateInt(str.replaceAll(" ", ""));
         int crc16 = get_crc16(mm, mm.length);
         System.out.println(Integer.toHexString(crc16 & 0x000000ff));

@@ -90,7 +90,7 @@ public class DataHandler extends IoHandlerAdapter {
                 }
             }
             //心跳包
-            if ("740C".equals(order)) {
+            else if ("740C".equals(order)) {
                 //3.响应客户端
                 if (crcCode.equals(dataCrc)) {
                     String diviceStatus = data.substring(26, 28);
@@ -186,7 +186,8 @@ public class DataHandler extends IoHandlerAdapter {
                 logger.info("发送给终端设置终端发送间隔时间的命令为：" + msg);
                 logger.info("读取到的信息为" + data);
                 logger.info("接受到的时间间隔" + Long.parseLong(data.substring(26, 28), 16) + "s");
-            } else {
+            }
+            else {
                 kafkaSenders.sendWithTopic(data, "railway_geographical_topic");
             }
 
