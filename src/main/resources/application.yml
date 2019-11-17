@@ -10,7 +10,7 @@ spring:
       batch-size: 16384
       # 缓存容量
       buffer-memory: 33554432
-      # 指定消息key和消息体的编解码方式
+      # 指定消息key和消息体的编解码方式cd
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
@@ -29,6 +29,8 @@ server:
   port: 8002
   profiles:
     active: dev
+  tomcat:
+    uri-encoding: utf-8
 logging:
   file:
     path: /log/railway

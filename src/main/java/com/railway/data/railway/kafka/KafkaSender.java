@@ -46,7 +46,7 @@ public class KafkaSender<T> {
             @Override
             public void onSuccess(SendResult<String, Object> stringObjectSendResult) {
                 logger.info("Produce: The message was sent successfully:");
-                logger.info("Produce: _+_+_+_+_+_+_+ result: " + stringObjectSendResult.toString());
+                logger.info("Produce:  result: " + stringObjectSendResult.toString());
             }
         });
     }

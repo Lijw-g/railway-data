@@ -20,10 +20,10 @@ public class UdpSendService {
     public static Logger logger = Logger.getLogger(UdpSendService.class.getName());
 
     public void Process(DatagramPacket packet) throws UnsupportedEncodingException {
-        logger.info("=======接收到的UDP信息======");
+        logger.info("get UDP message is");
         // 接收到的UDP信息，然后解码
         byte[] buffer = packet.getData();
         String srt2 = HexUtil.bytes2HexString(buffer);
-        logger.info("=======Process srt2 UTF-8======" + srt2);
+        logger.info("Process srt2 UTF-8" + srt2);
     }
 }

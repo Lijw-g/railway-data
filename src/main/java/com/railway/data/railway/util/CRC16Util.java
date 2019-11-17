@@ -1,7 +1,6 @@
 package com.railway.data.railway.util;
 
 
-import javax.sound.midi.Soundbank;
 
 public class CRC16Util {
 
@@ -27,7 +26,6 @@ public class CRC16Util {
             }
         }
 
-        System.out.println(Integer.toHexString(CRC));
         return CRC;
     }
 
@@ -36,9 +34,9 @@ public class CRC16Util {
         int crcResult = get_crc16(datas, datas.length);
         StringBuilder sb = new StringBuilder();
         String low = Integer.toHexString(crcResult & 0x000000ff);
-        if (low.length()<2){
+        if (low.length() < 2) {
             sb.append("0").append(low);
-        }else {
+        } else {
             sb.append(low);
         }
 

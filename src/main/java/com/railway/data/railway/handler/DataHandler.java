@@ -77,16 +77,16 @@ public class DataHandler extends IoHandlerAdapter {
                     responsData.append("01");
                     responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
                     responsData.append("0D0A");
-                    byte[] data2 = DataUtil.creatDate(responsData.toString());
+                    byte[] data2 = DataUtil.creatDate(responsData.toString().toUpperCase());
                     //3.响应客户端
                     //返回信息给Clinet端
                     IoBuffer buffer1 = IoBuffer.wrap(data2);
                     session.write(buffer1);
-                    logger.info("向传感器响应的数据是" + responsData);
+                    logger.info("respons data is" + responsData);
                 } else {
                     responsData.append("00");
                     responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
-                    logger.warning("数据校验失败，数据不正常");
+                    logger.warning("crc is error");
                 }
             }
             //心跳包
@@ -186,8 +186,7 @@ public class DataHandler extends IoHandlerAdapter {
                 logger.info("发送给终端设置终端发送间隔时间的命令为：" + msg);
                 logger.info("读取到的信息为" + data);
                 logger.info("接受到的时间间隔" + Long.parseLong(data.substring(26, 28), 16) + "s");
-            }
-            else {
+            } else {
                 kafkaSenders.sendWithTopic(data, "railway_geographical_topic");
             }
 
