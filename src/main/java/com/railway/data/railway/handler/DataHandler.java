@@ -57,7 +57,6 @@ public class DataHandler extends IoHandlerAdapter {
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
-        System.out.println("messageReceived");
         if (message instanceof IoBuffer) {
             IoBuffer buffer = (IoBuffer) message;
             byte[] datas = buffer.array();
@@ -65,8 +64,10 @@ public class DataHandler extends IoHandlerAdapter {
             String order = data.substring(22, 26);
             Integer dataSize = DataUtil.getDataSize((data.substring(4, 8)));
             data = data.substring(0, dataSize * 2);
+            logger.info("messageReceived is :"+data);
             String clientIP = ((InetSocketAddress) session.getRemoteAddress()).getAddress().getHostAddress();
             String crcCode = CRC16Util.creatCrc16_s(data.substring(0, data.length() - 8));
+            //String geoData=data.substring()
             String dataCrc = data.substring(data.length() - 8, data.length() - 4);
             //数据包
             if ("720E".equals(order)) {
@@ -74,6 +75,7 @@ public class DataHandler extends IoHandlerAdapter {
                 responsData.append("EA6A12002306010226FFFF720E");
                 if (crcCode.equals(dataCrc)) {
                     kafkaSenders.sendWithTopic(data, "railway_core_data_topic");
+                    //kafkaSenders.sendWithTopic(geoData, "railway_geographical_topic");
                     responsData.append("01");
                     responsData.append(CRC16Util.creatCrc16_s(responsData.toString()));
                     responsData.append("0D0A");
@@ -100,6 +102,7 @@ public class DataHandler extends IoHandlerAdapter {
                     heart.add(diviceStatus);
                     heart.add(data.substring(8, 22));
                     kafkaSenders.sendWithTopic(heart, "railway_heart_topic");
+                    logger.info("heart_info is :"+data);
                     if ("00".equals(diviceStatus)) {
                         logger.info("工作状态正常");
                     } else if ("E1".equals(diviceStatus)) {
@@ -186,8 +189,6 @@ public class DataHandler extends IoHandlerAdapter {
                 logger.info("发送给终端设置终端发送间隔时间的命令为：" + msg);
                 logger.info("读取到的信息为" + data);
                 logger.info("接受到的时间间隔" + Long.parseLong(data.substring(26, 28), 16) + "s");
-            } else {
-                kafkaSenders.sendWithTopic(data, "railway_geographical_topic");
             }
 
         }

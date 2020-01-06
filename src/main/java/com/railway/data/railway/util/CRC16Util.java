@@ -53,8 +53,8 @@ public class CRC16Util {
      * @param args
      */
     public static void main(String[] args) {
-        //EB 6A 2E 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 71 33 01 00 0D 01 33 19 01 00 37 01 00 07 01 35 19 01 41 67 F7 0D 0A
-        String str = "EB 6A 2 00 21 05 03 01 25 FF FF 72 0E 01 00 00 00 00 00 00 00 00 01 71 33 01 00 0D 01 33 19 01 00 37 01 00 07 01 35 19 01 41";
+        //EB 6B 2A 00 10 20 00 00 00 00 00 72 0E 01 24 10 00 00 83 F3 50 00 00 03 13 00 00 11 01 1A 51 00 00 24 00 16 16 01 00 00 00 00 53 AE 0D 0A
+        String str = "EB 6B 2E 00 10 20 00 00 00 00 00 72 0E 01 24 10 00 00 83 F3 50 00 00 03 13 00 00 11 01 1A 51 00 00 24 00 16 16 01 00 00 00 00";
         int[] mm = DataUtil.creatDateInt(str.replaceAll(" ", ""));
         int crc16 = get_crc16(mm, mm.length);
         System.out.println(Integer.toHexString(crc16 & 0x000000ff));

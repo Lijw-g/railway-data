@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: subway-datas
   kafka:
@@ -27,8 +29,6 @@ spring:
       concurrency: 3
 server:
   port: 8002
-  profiles:
-    active: dev
   tomcat:
     uri-encoding: utf-8
 logging:
